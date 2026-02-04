@@ -1,41 +1,87 @@
 <!DOCTYPE html>
-
 <html>
 <head>
   <title>Valentine 💖</title>
+
   <style>
     body {
       background: pink;
       text-align: center;
       margin-top: 100px;
       font-family: Arial, sans-serif;
+      overflow: hidden;
     }
+
     button {
       padding: 15px 25px;
       font-size: 18px;
       margin: 20px;
       cursor: pointer;
+      z-index: 2;
+      position: relative;
     }
+
     #noBtn {
       position: absolute;
     }
+
+    /* Falling hearts */
+    .heart {
+      position: fixed;
+      top: -10px;
+      color: red;
+      font-size: 20px;
+      animation: fall linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+      }
+    }
   </style>
 </head>
+
 <body>
 
-<h1>Will you be my Valentine? 💘</h1>
+<!-- Romantic instrumental (Kesariya vibe) -->
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/audio/2023/03/28/audio_09b89e8d7c.mp3" type="audio/mpeg">
+</audio>
+
+<h1>Saurabh, will you be my Valentine? 💘</h1>
+<h3>— Priyanka 💕</h3>
 
 <button onclick="sayYes()">Yes 😍</button>
 <button id="noBtn">No 🙃</button>
 
+<br><br>
+<button onclick="playMusic()">Play music 🎵</button>
+
 <div id="yesPage" style="display:none;">
   <h1>Best decision ever 💖</h1>
+
   <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" width="300">
+
   <h2>I knew you’d say YES 😘</h2>
+
+  <p><strong>PS: You had no choice 😌</strong></p>
+
+  <p>Happy Valentine’s Day 💕</p>
+
+  <a href="https://www.youtube.com/watch?v=BddP6PYo2gs" target="_blank">
+    ▶ Play Kesariya 🎶
+  </a>
 </div>
 
 <script>
   const noBtn = document.getElementById("noBtn");
+  const music = document.getElementById("bgMusic");
+
+  function playMusic() {
+    music.play();
+  }
 
   noBtn.addEventListener("mouseover", () => {
     const x = Math.random() * (window.innerWidth - 120);
@@ -45,8 +91,26 @@
   });
 
   function sayYes() {
+    music.play();
     document.body.innerHTML =
       document.getElementById("yesPage").innerHTML;
+    startHearts();
+  }
+
+  /* Falling hearts animation */
+  function startHearts() {
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }, 300);
   }
 </script>
 
