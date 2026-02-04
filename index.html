@@ -70,7 +70,7 @@
 
   <p>Happy Valentine’s Day 💕</p>
 
-  <a href="https://www.youtube.com/watch?v=BddP6PYo2gs" target="_blank">
+  <a href="https://www.youtube.com/watch?v=BddP6PYo2gs" target="_blank" rel="noopener noreferrer">
     ▶ Play Kesariya 🎶
   </a>
 </div>
@@ -80,7 +80,12 @@
   const music = document.getElementById("bgMusic");
 
   function playMusic() {
-    music.play();
+    music.play().then(() => {
+      console.log("Music started");
+    }).catch(error => {
+      console.log("Music play prevented:", error);
+      alert("Please interact with the page (click or tap) to allow music.");
+    });
   }
 
   noBtn.addEventListener("mouseover", () => {
@@ -91,7 +96,7 @@
   });
 
   function sayYes() {
-    music.play();
+    playMusic();
     document.body.innerHTML =
       document.getElementById("yesPage").innerHTML;
     startHearts();
